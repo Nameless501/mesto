@@ -1,3 +1,5 @@
+// Переменные
+
 const editOpen = document.querySelector('.profile__edit-button');
 
 const inputName = document.querySelector('.popup__name-input');
@@ -12,6 +14,9 @@ const popup = document.querySelector('.popup');
 
 const form = document.querySelector('.popup__container');
 
+// функции открытия и закрытия модального окна
+// и закрытия окна при клике за его пределами
+
 function openClose(evt) {
     if (!popup.classList.contains('popup_opened')) {
         popup.classList.toggle('popup_opened');
@@ -23,17 +28,26 @@ function openClose(evt) {
 }
 
 function clickOutside(evt) {
-    if(evt.target === evt.currentTarget) {
+    if (evt.target === evt.currentTarget) {
         openClose();
     }
 }
 
+// Проверка, что пользователь не пытается сохранить пустую строку
+// и сохранение данных при событии submit
+
 function submit(evt) {
-    evt.preventDefault();
-    userName.textContent = `${inputName.value}`;
-    userInfo.textContent = `${inputInfo.value}`;
-    openClose();
+    if (!inputName.value || !inputInfo.value) {
+        evt.preventDefault();
+    } else {
+        evt.preventDefault();
+        userName.textContent = `${inputName.value}`;
+        userInfo.textContent = `${inputInfo.value}`;
+        openClose();
+    }
 }
+
+// Обработчики событий
 
 editOpen.addEventListener('click', openClose);
 
