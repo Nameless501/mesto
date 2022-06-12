@@ -1,60 +1,62 @@
 .profile {
-    padding: 0;
     max-width: 880px;
-    display: flex;
-    justify-content: space-between;
     box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 120px 1fr 150px;
+    grid-template-areas:
+      'img info button';
+    column-gap: 30px;
 }
 
 @media screen and (max-width: 767px) {
     .profile {
-        width: 282px;
-        flex-direction: column;
+        max-width: 282px;
+        grid-template-columns: 282px;
+        grid-template-rows: 120px 1fr 1fr;
+        grid-template-areas:
+        'img' 
+        'info' 
+        'button';
+    }
+}
+
+.profile__avatar {
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: white;
+    grid-area: img;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__avatar {
+        margin: 0 auto;
     }
 }
 
 .profile__info {
     margin: 0;
-    display: grid;
-    grid-template-columns: 120px minmax(min-content, max-content) minmax(min-content, max-content);
-    grid-template-rows: repeat(2, minmax(min-content, max-content));
-    grid-template-areas: 
-    'avatar title button'
-    'avatar subtitle subtitle';
+    padding: 0;
+    max-width: 336px;
+    grid-area: info;
+    align-self: center;
+    position: relative;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 767px) {
     .profile__info {
-        grid-template-columns: minmax(min-content, max-content) minmax(min-content, max-content);
-        grid-template-rows: 120px minmax(min-content, max-content) minmax(min-content, max-content);
-        grid-template-areas: 
-        'avatar avatar'
-        'title button'
-        'subtitle subtitle';
+        margin-top: 26px;
+        max-width: 282px;
     }
 }
 
-.profile__avatar {
-    display: block;
+.profile__name {
     margin: 0;
     padding: 0;
-    grid-area: avatar;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-}
-
-@media screen and (max-width: 767px) {
-    .profile__avatar {
-        justify-self: center;
-    }
-}
-
-.profile__title {
-    margin: 0 0 0 30px;
-    padding: 0;
     max-width: 294px;
-    grid-area: title;
     font-weight: 500;
     font-size: 42px;
     line-height: 48px;
@@ -65,20 +67,19 @@
 }
 
 @media screen and (max-width: 767px) {
-    .profile__title {
-        margin: 26px 0 0;
+    .profile__name {
+        margin: 0 auto;
         font-size: 27px;
         line-height: 33px;
+        max-width: 194px;
         text-align: center;
-        justify-self: center;
     }
 }
 
-.profile__subtitle {
-    margin: 16px 0 0 30px;
+.profile__job {
+    margin: 7px 0 0;
     padding: 0;
-    max-width: 336px;
-    grid-area: subtitle;
+    max-width: 100%;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
@@ -89,19 +90,20 @@
 }
 
 @media screen and (max-width: 767px) {
-    .profile__subtitle {
-        margin: 14px 0 0;
+    .profile__job {
+        margin-top: 8px auto 0;
         font-size: 14px;
         line-height: 17px;
         text-align: center;
-        justify-self: center;
     }
 }
 
 .profile__edit-button {
-    margin: 0 0 0 18px;
+    margin: 0;
     padding: 0;
-    grid-area: button;
+    position: absolute;
+    top: 15px;
+    right: 0;
     width: 24px;
     height: 24px;
     background-color: #000;
@@ -110,7 +112,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: 10px 10px;
-    align-self: end;
     box-sizing: border-box;
 }
 
@@ -121,10 +122,10 @@
 
 @media screen and (max-width: 767px) {
     .profile__edit-button {
-        margin-left: 10px;
+        top: 10px;
+        right: 19px;
         width: 18px;
         height: 18px;
-        justify-self: start;
         background-size: 5.25px 5.25px;
     }
 }
@@ -143,6 +144,7 @@
     background-size: 22px 22px;
     box-sizing: border-box;
     align-self: center;
+    grid-area: button;
 }
 
 .profile__add-button:hover {
@@ -152,9 +154,8 @@
 
 @media screen and (max-width: 767px) {
     .profile__add-button {
-        margin-top: 36px;
+        margin: 33px auto 0;
         width: 282px;
-        height: 50px;
         background-size: 16px 16px;
     }
 }
