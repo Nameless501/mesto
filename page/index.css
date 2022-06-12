@@ -1,0 +1,44 @@
+@import url(../vendor/normalize.css);
+
+@import url(../vendor/fonts/fonts.css);
+
+/* Блок page */
+
+@import url(../blocks/page/page.css);
+
+@import url(../blocks/page/__header/page__header.css);
+
+@import url(../blocks/page/__profile/page__profile.css);
+
+@import url(../blocks/page/__elements/page__elements.css);
+
+@import url(../blocks/page/__footer/page__footer.css);
+
+/* Блок Header */
+
+@import url(../blocks/header/header.css);
+
+@import url(../blocks/header/__logo/header__logo.css);
+
+/* Блок Profile */
+
+@import url(../blocks/profile/profile.css);
+
+
+
+/* Блок Elements */
+
+@import url(../blocks/elements/elements.css);
+
+
+
+
+/* Блок footer */
+
+@import url(../blocks/footer/footer.css);
+
+
+
+/* Блок pop-up */
+
+@import url(../blocks/popup/popup.css);
