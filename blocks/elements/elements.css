@@ -62,7 +62,7 @@
 }
 
 .elements__caption {
-    margin: 25px 15px 31px 21px;
+    margin: 25px 20px 31px 21px;
     padding: 0;
     display: flex;
     justify-content: space-between;
@@ -75,7 +75,7 @@
     font-weight: 900;
     font-size: 24px;
     line-height: 29px;
-    max-width: calc(246px - 22px);
+    max-width: 195px;
     color: #000;
     text-overflow: ellipsis;
     white-space: nowrap;
