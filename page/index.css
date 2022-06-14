@@ -2,17 +2,21 @@
 
 @import url(../vendor/fonts/fonts.css);
 
+@import url(../blocks/window/window.css);
+
 /* Блок page */
 
 @import url(../blocks/page/page.css);
 
 @import url(../blocks/page/__header/page__header.css);
 
-@import url(../blocks/page/__profile/page__profile.css);
-
-@import url(../blocks/page/__elements/page__elements.css);
-
 @import url(../blocks/page/__footer/page__footer.css);
+
+/* Блок content */
+
+@import url(../blocks/content/__profile/content__profile.css);
+
+@import url(../blocks/content/__elements/content__elements.css);
 
 /* Блок Header */
 
@@ -74,9 +78,11 @@
 
 @import url(../blocks/popup/__title/popup__title.css);
 
-@import url(../blocks/popup/__name-input/popup__name-input.css);
+@import url(../blocks/popup/__input/popup__input.css);
 
-@import url(../blocks/popup/__job-input/popup__job-input.css);
+@import url(../blocks/popup/__input/_type_name/popup__input_type_name.css);
+
+@import url(../blocks/popup/__input/_type_job/popup__input_type_job.css);
 
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 

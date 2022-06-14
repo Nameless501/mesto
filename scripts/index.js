@@ -2,9 +2,9 @@
 
 const editOpen = document.querySelector('.profile__edit-button');
 
-const inputName = document.querySelector('.popup__name-input');
+const inputName = document.querySelector('.popup__input_type_name');
 
-const inputInfo = document.querySelector('.popup__job-input');
+const inputInfo = document.querySelector('.popup__input_type_job');
 
 const userName = document.querySelector('.profile__name');
 
