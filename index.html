@@ -43,7 +43,7 @@
         <ul class="popup__items">
           <!--profile pop-up-->
           <li class="popup__item popup_type_profile">
-            <form name="profile" class="popup__container">
+            <form name="profile" class="popup__form popup__container">
               <fieldset class="popup__fieldset">
                 <legend class="popup__title">
                   Редактировать профиль
@@ -57,7 +57,7 @@
           </li>
           <!--new card pop-up-->
           <li class="popup__item popup_type_add">
-            <form name="add" class="popup__container">
+            <form name="add" class="popup__form popup__container">
               <fieldset class="popup__fieldset">
                 <legend class="popup__title">
                   Новое место
@@ -71,6 +71,11 @@
           </li>
           <!--image pop-up-->
           <li class="popup__item popup_type_image">
+            <figure class="popup__figure popup__container">
+              <img src="" alt="Фотография" class="popup__image">
+              <figcaption class="popup__caption"></figcaption>
+              <button type=button class="popup__close-button"></button>
+            </figure>
           </li>
         </ul>
       </section>

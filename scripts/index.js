@@ -20,6 +20,8 @@ const profilePopup = document.querySelector('.popup_type_profile');
 
 const addPopup = document.querySelector('.popup_type_add');
 
+const imagePopup = document.querySelector('.popup_type_image');
+
 const form = document.querySelectorAll('.popup__container');
 
 const initialCards = [
@@ -61,6 +63,7 @@ function addCards(nameValue, linkValue) {
 
     card.querySelector('.elements__like-button').addEventListener('click', like);
     card.querySelector('.elements__delete-button').addEventListener('click', deleteCard);
+    card.querySelector('.elements__image').addEventListener('click', imageOpen);
 
     gallery.prepend(card);
 }
@@ -84,6 +87,19 @@ function deleteCard(event) {
     parent.remove();
 }
 
+// функця открытия модального окна с изображением
+
+function imageOpen(event) {
+    const popupImage = imagePopup.querySelector('.popup__image');
+    const popupCaption = imagePopup.querySelector('.popup__caption');
+    const imageSrc = event.target.getAttribute("src");
+    const imageCaption = event.target.parentElement.querySelector('.elements__caption');
+
+    imagePopup.classList.add('popup_opened');
+    popupImage.setAttribute('src', `${imageSrc}`);
+    popupCaption.textContent = imageCaption.textContent;
+}
+
 // функця открытия модального окна
 
 function openPopup(event) {
@@ -93,7 +109,7 @@ function openPopup(event) {
             inputInfo.setAttribute('value', `${userInfo.textContent}`);
     } else if (event.currentTarget === addOpen) {
         addPopup.classList.add('popup_opened');
-    }
+    } 
 }
 
 // функции закрытия и submit
@@ -101,6 +117,7 @@ function openPopup(event) {
 for (i = 0; i < form.length; i++) {
     const formItem = form[i];
     const parent = formItem.closest('.popup__item');
+    const closeButton = parent.querySelector('.popup__close-button');
 
     function closePopup() {
         parent.classList.remove('popup_opened');
@@ -141,7 +158,8 @@ for (i = 0; i < form.length; i++) {
 
     formItem.addEventListener('reset', closePopup);
     parent.addEventListener('click', clickOutside);
-    formItem.addEventListener('submit', submit)
+    formItem.addEventListener('submit', submit);
+    closeButton.addEventListener('click', closePopup);
 }
 
 // Обработчики событий
