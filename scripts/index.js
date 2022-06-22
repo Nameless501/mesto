@@ -24,6 +24,8 @@ const imagePopup = document.querySelector('.popup_type_image');
 
 const form = document.querySelectorAll('.popup__container');
 
+// массив с данными карточек
+
 const initialCards = [
     {
       name: 'Архыз',
@@ -63,7 +65,7 @@ function addCards(nameValue, linkValue) {
 
     card.querySelector('.elements__like-button').addEventListener('click', like);
     card.querySelector('.elements__delete-button').addEventListener('click', deleteCard);
-    card.querySelector('.elements__image').addEventListener('click', imageOpen);
+    card.querySelector('.elements__image').addEventListener('click', openPopup);
 
     gallery.prepend(card);
 }
@@ -87,29 +89,25 @@ function deleteCard(event) {
     parent.remove();
 }
 
-// функця открытия модального окна с изображением
-
-function imageOpen(event) {
-    const popupImage = imagePopup.querySelector('.popup__image');
-    const popupCaption = imagePopup.querySelector('.popup__caption');
-    const imageSrc = event.target.getAttribute("src");
-    const imageCaption = event.target.parentElement.querySelector('.elements__caption');
-
-    imagePopup.classList.add('popup_opened');
-    popupImage.setAttribute('src', `${imageSrc}`);
-    popupCaption.textContent = imageCaption.textContent;
-}
-
 // функця открытия модального окна
 
 function openPopup(event) {
     if (event.currentTarget === editOpen) {
-            profilePopup.classList.add('popup_opened');
-            inputName.setAttribute('value', `${userName.textContent}`);
-            inputInfo.setAttribute('value', `${userInfo.textContent}`);
+        profilePopup.classList.add('popup_opened');
+        inputName.setAttribute('value', `${userName.textContent}`);
+        inputInfo.setAttribute('value', `${userInfo.textContent}`);
     } else if (event.currentTarget === addOpen) {
         addPopup.classList.add('popup_opened');
-    } 
+    } else {
+        const popupImage = imagePopup.querySelector('.popup__image');
+        const popupCaption = imagePopup.querySelector('.popup__caption');
+        const imageSrc = event.target.getAttribute("src");
+        const imageCaption = event.target.parentElement.querySelector('.elements__caption');
+
+        imagePopup.classList.add('popup_opened');
+        popupImage.setAttribute('src', `${imageSrc}`);
+        popupCaption.textContent = imageCaption.textContent;
+    }
 }
 
 // функции закрытия и submit
