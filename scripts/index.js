@@ -16,11 +16,11 @@ const userName = document.querySelector('.profile__name');
 
 const userInfo = document.querySelector('.profile__job');
 
-const profilePopup = document.querySelector('.popup_type_profile');
+const profilePopup = document.querySelector('.popup__item_type_profile');
 
-const addPopup = document.querySelector('.popup_type_add');
+const addPopup = document.querySelector('.popup__item_type_add');
 
-const imagePopup = document.querySelector('.popup_type_image');
+const imagePopup = document.querySelector('.popup__item_type_image');
 
 const form = document.querySelectorAll('.popup__container');
 
