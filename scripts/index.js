@@ -6,8 +6,6 @@ const profileButton = document.querySelector('.profile__edit-button');
 
 const addButton = document.querySelector('.profile__add-button');
 
-const closeButtons = document.querySelectorAll('.popup__close-button');
-
 const popups = document.querySelectorAll('.popup');
 
 const profilePopup = document.querySelector('.popup_type_profile');
@@ -115,20 +113,15 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
-closeButtons.forEach((item) => {
-    const closestPopup = item.closest('.popup');
-    item.addEventListener('click', () => {closePopup(closestPopup)});
-});
-
-popups.forEach((item) => {
-    item.addEventListener('click', (event) => {clickOutside(item, event)});
-});
-
-function clickOutside(item, addEventListener) {
-    if (event.target === event.currentTarget) {
-        closePopup(item);
-    }
-}
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup);
+        } else if (evt.target.classList.contains('popup__close-button')) {
+            closePopup(popup);
+        }
+    })
+})
 
 // функции submit
 
@@ -152,8 +145,8 @@ function handleCardFormSubmit(evt) {
         addCard(`${inputPlace.value}`, `${inputLink.value}`);
 
         closePopup(addPopup);
-        evt.target.reset()
-}
+        evt.target.reset();
+    }
 }
 
 // функция обработчик кнопки like
