@@ -29,7 +29,7 @@
           <template class="elements__card-template">
             <li class="elements__card">
             <figure class="elements__figure">
-              <img src="#" alt="Фотография" class="elements__image">
+              <img src="#" alt="#" class="elements__image">
               <figcaption class="elements__caption"></figcaption>
             </figure>
             <button type="button" class="elements__like-button"></button>
@@ -38,48 +38,43 @@
           </template>
         </ul>
       </section>
-<!--Блок pop-up-->
-      <section class="popup">
-        <ul class="popup__items">
-          <!--profile pop-up-->
-          <li class="popup__item popup__item_type_profile">
-            <form name="profile" class="popup__form popup__container">
-              <fieldset class="popup__fieldset">
-                <legend class="popup__title">
-                  Редактировать профиль
-                </legend>
-                <input type="text" name="name" class="popup__input popup__input_type_name">
-                <input type="text" name="info" class="popup__input popup__input_type_job">
-                <button type=submit class="popup__submit-button">Сохранить</button>
-              </fieldset>
-              <button type=reset class="popup__close-button"></button>
-            </form>
-          </li>
-          <!--new card pop-up-->
-          <li class="popup__item popup__item_type_add">
-            <form name="add" class="popup__form popup__container">
-              <fieldset class="popup__fieldset">
-                <legend class="popup__title">
-                  Новое место
-                </legend>
-                <input type="text" name="place" placeholder="Название" class="popup__input popup__input_type_place">
-                <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link">
-                <button type=submit class="popup__submit-button">Создать</button>
-              </fieldset>
-              <button type=reset class="popup__close-button"></button>
-            </form>
-          </li>
-          <!--image pop-up-->
-          <li class="popup__item popup__item_type_image">
-            <div class="popup__wrapper popup__container">
-              <figure class="popup__figure">
-                <img src="#" alt="Фотография" class="popup__image">
-                <figcaption class="popup__caption"></figcaption>
-              </figure>
-              <button type=button class="popup__close-button"></button>
-            </div>
-          </li>
-        </ul>
+<!--Блок pop-up profile-->
+      <section class="popup popup_type_profile">
+        <form name="profile" class="popup__form">
+          <fieldset class="popup__fieldset">
+            <legend class="popup__title">
+              Редактировать профиль
+            </legend>
+            <input type="text" name="name" class="popup__input popup__input_type_name">
+            <input type="text" name="info" class="popup__input popup__input_type_job">
+            <button type=submit class="popup__submit-button">Сохранить</button>
+          </fieldset>
+          <button type=reset class="popup__close-button"></button>
+        </form>
+      </section>
+<!--Блок pop-up add-->
+      <section class="popup popup_type_add">
+        <form name="add" class="popup__form">
+          <fieldset class="popup__fieldset">
+            <legend class="popup__title">
+              Новое место
+            </legend>
+            <input type="text" name="place" placeholder="Название" class="popup__input popup__input_type_place">
+            <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link">
+            <button type=submit class="popup__submit-button">Создать</button>
+          </fieldset>
+          <button type=reset class="popup__close-button"></button>
+        </form>
+      </section>
+<!--Блок pop-up image-->
+      <section class="popup popup_type_image">
+        <div class="popup__wrapper">
+          <figure class="popup__figure">
+            <img src="#" alt="#" class="popup__image">
+            <figcaption class="popup__caption"></figcaption>
+          </figure>
+          <button type=button class="popup__close-button"></button>
+        </div>
       </section>
     </main>
 <!--Блок footer-->
