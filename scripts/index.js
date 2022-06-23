@@ -72,8 +72,8 @@ function createCard(nameValue, linkValue) {
     image.alt = nameValue + ' фотография'
     card.querySelector('.elements__caption').textContent = nameValue;
 
-    image.addEventListener('click', () => {imagePopupOpen(nameValue, linkValue)})
-    likeButton.addEventListener('click', likeToggle);
+    image.addEventListener('click', () => {openImagePopup(nameValue, linkValue)})
+    likeButton.addEventListener('click', toggleLike);
     deleteButton.addEventListener('click', deleteCard);
 
     return card;
@@ -95,13 +95,13 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
 
-function profilePopupOpen() {
+function openProfilePopup() {
     openPopup(profilePopup);
     inputName.setAttribute('value', `${userName.textContent}`);
     inputInfo.setAttribute('value', `${userInfo.textContent}`);
 }
 
-function imagePopupOpen(nameValue, linkValue) {
+function openImagePopup(nameValue, linkValue) {
     popupImage.src = linkValue;
     popupImage.alt = nameValue + ' фотография';
     popupCaption.textContent = nameValue;
@@ -121,10 +121,10 @@ closeButtons.forEach((item) => {
 });
 
 popups.forEach((item) => {
-    item.addEventListener('click', () => {clickOutside(item)});
+    item.addEventListener('click', (event) => {clickOutside(item, event)});
 });
 
-function clickOutside(item) {
+function clickOutside(item, addEventListener) {
     if (event.target === event.currentTarget) {
         closePopup(item);
     }
@@ -132,7 +132,7 @@ function clickOutside(item) {
 
 // функции submit
 
-function profileSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     if (!inputName.value || !inputInfo.value) {
         evt.preventDefault();
     } else {
@@ -143,13 +143,12 @@ function profileSubmit(evt) {
     }
 }
 
-function addSubmit(evt) {
+function handleCardFormSubmit(evt) {
     if (!inputPlace.value || !inputLink.value) {
         evt.preventDefault();
     } else {
         evt.preventDefault();
 
-        createCard(`${inputPlace.value}`, `${inputLink.value}`);
         addCard(`${inputPlace.value}`, `${inputLink.value}`);
 
         closePopup(addPopup);
@@ -159,7 +158,7 @@ function addSubmit(evt) {
 
 // функция обработчик кнопки like
 
-function likeToggle(event) {
+function toggleLike(event) {
     event.target.classList.toggle('elements__like-button__active');
 }
 
@@ -172,10 +171,10 @@ function deleteCard(event) {
 
 // обработчики событий
 
-profileButton.addEventListener('click', profilePopupOpen);
+profileButton.addEventListener('click', openProfilePopup);
 
 addButton.addEventListener('click', () => {openPopup(addPopup)});
 
-profilePopup.addEventListener('submit', profileSubmit);
+profilePopup.addEventListener('submit', handleProfileFormSubmit);
 
-addPopup.addEventListener('submit', addSubmit);
+addPopup.addEventListener('submit', handleCardFormSubmit);
