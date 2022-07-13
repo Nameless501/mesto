@@ -122,9 +122,17 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
+function removeErrors(popup) {
+    const inputs = Array.from(popup.querySelectorAll('.popup__input'))
+    
+    inputs.forEach((currentInput) => {hideInputError(popup, currentInput, 'popup__input_type_error', 'popup__error-message_visible')});
+
+    closePopup(popup);
+}
+
 function deleteListenerAndClose(popup) {
     document.removeEventListener('keydown', escapeHandler);
-    closePopup(popup);
+    removeErrors(popup);
 }
 
 function overlayHandler(evt, popup) {
