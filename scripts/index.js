@@ -122,17 +122,26 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
-function removeErrors(popup) {
-    const inputs = Array.from(popup.querySelectorAll('.popup__input'))
+function cleanPopupAndClose(popup) {
+    if (!popup.classList.contains('popup_type_image')) {
+        const currentForm = popup.querySelector('.popup__form');
+        const inputs = Array.from(currentForm.querySelectorAll('.popup__input'));
+        const submitButton = popup.querySelector('.popup__submit-button');
     
-    inputs.forEach((currentInput) => {hideInputError(popup, currentInput, 'popup__input_type_error', 'popup__error-message_visible')});
+        inputs.forEach((currentInput) => {
+            hideInputError(currentForm, currentInput, {inputErrorClass: 'popup__input_type_error', errorClass: 'popup__error-message_visible'});
+            disableSubmitButton(submitButton, 'popup__submit-button_disabled');
+        });
+        currentForm.reset();
+        closePopup(popup);
+    }
 
     closePopup(popup);
 }
 
 function deleteListenerAndClose(popup) {
     document.removeEventListener('keydown', escapeHandler);
-    removeErrors(popup);
+    cleanPopupAndClose(popup);
 }
 
 function overlayHandler(evt, popup) {
