@@ -70,7 +70,7 @@ function createCard(nameValue, linkValue) {
     image.alt = nameValue + ' фотография'
     card.querySelector('.elements__caption').textContent = nameValue;
 
-    image.addEventListener('click', () => {openImagePopup(nameValue, linkValue)})
+    image.addEventListener('click', (evt) => {openImagePopup(nameValue, linkValue, evt)})
     likeButton.addEventListener('click', toggleLike);
     deleteButton.addEventListener('click', deleteCard);
 
@@ -93,34 +93,58 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
 
+function addListenerAndOpen(popup, evt) {
+    document.addEventListener('keydown', escapeHandler);
+    if (evt.target === profileButton) {
+        openProfilePopup();
+    } else {
+        openPopup(popup);
+    }
+}
+
 function openProfilePopup() {
     openPopup(profilePopup);
     inputName.setAttribute('value', `${userName.textContent}`);
     inputInfo.setAttribute('value', `${userInfo.textContent}`);
 }
 
-function openImagePopup(nameValue, linkValue) {
+function openImagePopup(nameValue, linkValue, evt) {
     popupImage.src = linkValue;
     popupImage.alt = nameValue + ' фотография';
     popupCaption.textContent = nameValue;
 
-    openPopup(imagePopup);
+    addListenerAndOpen(imagePopup, evt);
 }
 
-// закрытие popup по клику на крестик и вне модального окна
+// закрытие popup
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
+function deleteListenerAndClose(popup) {
+    document.removeEventListener('keydown', escapeHandler);
+    closePopup(popup);
+}
+
+function overlayHandler(evt, popup) {
+    if (evt.target.classList.contains('popup_opened')) {
+        deleteListenerAndClose(popup);
+    } else if (evt.target.classList.contains('popup__close-button')) {
+        deleteListenerAndClose(popup);
+    }
+}
+
+function escapeHandler(evt) {
+    const openedPopup = document.querySelector('.popup_opened')
+    if (evt.key === 'Escape') {
+        deleteListenerAndClose(openedPopup);
+    }
+}
+
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup);
-        } else if (evt.target.classList.contains('popup__close-button')) {
-            closePopup(popup);
-        }
-    })
+        overlayHandler(evt, popup)});
 })
 
 // функции submit
@@ -132,7 +156,7 @@ function handleProfileFormSubmit(evt) {
         evt.preventDefault();
         userName.textContent = `${inputName.value}`;
         userInfo.textContent = `${inputInfo.value}`;
-        closePopup(profilePopup);
+        deleteListenerAndClose(profilePopup);
     }
 }
 
@@ -144,7 +168,7 @@ function handleCardFormSubmit(evt) {
 
         addCard(`${inputPlace.value}`, `${inputLink.value}`);
 
-        closePopup(addPopup);
+        deleteListenerAndClose(addPopup);
         evt.target.reset();
     }
 }
@@ -164,9 +188,9 @@ function deleteCard(event) {
 
 // обработчики событий
 
-profileButton.addEventListener('click', openProfilePopup);
+profileButton.addEventListener('click', (evt) => {addListenerAndOpen(profilePopup, evt)});
 
-addButton.addEventListener('click', () => {openPopup(addPopup)});
+addButton.addEventListener('click', (evt) => {addListenerAndOpen(addPopup, evt)});
 
 profilePopup.addEventListener('submit', handleProfileFormSubmit);
 

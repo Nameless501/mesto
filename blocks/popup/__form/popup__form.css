@@ -1,8 +1,8 @@
 .popup__form {
     margin: 0;
-    padding: 34px 36px 37px;
+    padding: 34px 36px 10px;
     width: 430px;
-    height: 330px;
+    min-height: 330px;
     box-sizing: border-box;
     position: fixed;
     top: 50%;
@@ -17,6 +17,6 @@
     .popup__form {
         padding: 25px 22px;
         width: 283px;
-        height: 322px;
+        min-height: 322px;
     }
 }
