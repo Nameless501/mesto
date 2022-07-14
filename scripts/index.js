@@ -30,6 +30,8 @@ const popupImage = imagePopup.querySelector('.popup__image');
 
 const popupCaption = imagePopup.querySelector('.popup__caption');
 
+const cardTemplate = document.querySelector('.elements__card-template').content;
+
 const initialCards = [
     {
       name: 'Архыз',
@@ -60,7 +62,6 @@ const initialCards = [
 // Добавление карточек
 
 function createCard(nameValue, linkValue) {
-    const cardTemplate = document.querySelector('.elements__card-template').content;
     const card = cardTemplate.querySelector('.elements__card').cloneNode(true);
     const image = card.querySelector('.elements__image');
     const likeButton = card.querySelector('.elements__like-button');
@@ -153,8 +154,8 @@ function overlayHandler(evt, popup) {
 }
 
 function escapeHandler(evt) {
-    const openedPopup = document.querySelector('.popup_opened')
     if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened');
         deleteListenerAndClose(openedPopup);
     }
 }
