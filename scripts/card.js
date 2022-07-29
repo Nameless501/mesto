@@ -17,7 +17,7 @@ class Card {
         this._setEventListeners();
 
         this._cardImage.src = this._link;
-        this._cardImage.alt = this._name;
+        this._cardImage.alt = this._name + ' фотография';
         this._element.querySelector('.elements__caption').textContent = this._name;
 
         return this._element;
