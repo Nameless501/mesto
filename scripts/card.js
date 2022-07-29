@@ -13,9 +13,11 @@ class Card {
 
     createCard() {
         this._element = this._getTemplate();
+        this._cardImage = this._element.querySelector('.elements__image');
         this._setEventListeners();
 
-        this._element.querySelector('.elements__image').src = this._link;
+        this._cardImage.src = this._link;
+        this._cardImage.alt = this._name;
         this._element.querySelector('.elements__caption').textContent = this._name;
 
         return this._element;
@@ -28,7 +30,7 @@ class Card {
         this._element.querySelector('.elements__delete-button').addEventListener('click', () => {
             this._deleteHandler();
         })
-        this._element.querySelector('.elements__image').addEventListener('click', () => {
+        this._cardImage.addEventListener('click', () => {
             this._handleCardClick(this._name, this._link);
         })
     }
@@ -38,9 +40,9 @@ class Card {
     }
 
     _deleteHandler() {
-        const parent = this._element.closest('.elements__card');
+        this._element.remove();
 
-        parent.remove();
+        this._element = null;
     }
 }
 

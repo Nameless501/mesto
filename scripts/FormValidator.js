@@ -13,8 +13,6 @@ class FormValidator {
         this._inputList = Array.from(this._currentForm.querySelectorAll(this._inputSelector));
         this._submitButton = this._currentForm.querySelector(this._submitButtonSelector);
 
-        this._setEventListeners();
-
         this._toggleSubmitState();
 
         this._inputList.forEach((currentInput) => {
@@ -73,34 +71,12 @@ class FormValidator {
         this._submitButton.removeAttribute('disabled');
     }
 
-    _clearValidation() {
+    clearValidation() {
         this._disableSubmitButton();
 
         this._inputList.forEach((currentInput) => {
             this._hideInputError(currentInput);
         })
-    }
-
-    _setEventListeners() {
-        this._popup = this._currentForm.closest('.popup');
-
-        this._popup.addEventListener('click', (evt) => {
-            if (evt.target.classList.contains('popup')) {
-                this._clearValidation();
-            } else if (evt.target.classList.contains('popup__close-button')) {
-                this._clearValidation();
-            }
-        });
-
-        this._currentForm.addEventListener('submit', () => {
-            this._clearValidation();
-        });
-
-        document.addEventListener('keydown', (evt) => {
-            if(evt.key === 'Escape') {
-                this._clearValidation();
-            }
-        });
     }
 }
 
