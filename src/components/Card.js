@@ -24,7 +24,9 @@ class Card {
     }
 
     _setEventListeners() {
-        this._element.querySelector('.elements__like-button').addEventListener('click', () => {
+        this._likeButton = this._element.querySelector('.elements__like-button');
+
+        this._likeButton.addEventListener('click', () => {
             this._likeHandler();
         })
         this._element.querySelector('.elements__delete-button').addEventListener('click', () => {
@@ -36,7 +38,7 @@ class Card {
     }
 
     _likeHandler() {
-        this._element.querySelector('.elements__like-button').classList.toggle('elements__like-button__active');
+        this._likeButton.classList.toggle('elements__like-button__active');
     }
 
     _deleteHandler() {
