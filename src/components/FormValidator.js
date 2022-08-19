@@ -1,6 +1,5 @@
 class FormValidator {
     constructor(currentForm, config) {
-        this._formSelector = config.formSelector;
         this._inputSelector = config.inputSelector;
         this._submitButtonSelector = config.submitButtonSelector;
         this._inactiveButtonClass = config.inactiveButtonClass;
@@ -63,7 +62,7 @@ class FormValidator {
 
     _disableSubmitButton() {
         this._submitButton.classList.add(this._inactiveButtonClass);
-        this._submitButton.setAttribute('disabled', true);
+        this._submitButton.disabled = true;
     }
 
     _activateSubmitButton() {

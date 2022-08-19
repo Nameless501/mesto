@@ -1,22 +1,18 @@
-import { userInfo, userName } from "../utils/constants.js";
-
 export class UserInfo {
     constructor(data) {
-        this._name = data.name;
-        this._info = data.info;
-        this._userName = userName;
-        this._userInfo = userInfo;
+        this._userNameElement = document.querySelector(data.name);
+        this._userInfoElement = document.querySelector(data.info);
     }
 
     getUserInfo = () => {
         return {
-            name: this._userName.textContent,
-            info: this._userInfo.textContent
+            name: this._userNameElement.textContent,
+            info: this._userInfoElement.textContent
         }
     }
 
-    setUserInfo = () => {
-        this._userName.textContent = this._name;
-        this._userInfo.textContent = this._info;
+    setUserInfo = (data) => {
+        this._userNameElement.textContent = data.name;
+        this._userInfoElement.textContent = data.info;
     }
 }

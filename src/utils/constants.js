@@ -36,11 +36,12 @@ export const initialCards = [
     }
 ];
 
+export const userInfoSelectors = {
+  name: '.profile__name',
+  info: '.profile__job'
+}
+
 // Константы
-
-export const userName = document.querySelector('.profile__name');
-
-export const userInfo = document.querySelector('.profile__job');
 
 export const profileButton = document.querySelector('.profile__edit-button');
 
@@ -51,3 +52,7 @@ export const profilePopupSelector = document.querySelector('.popup_type_profile'
 export const newCardPopupSelector = document.querySelector('.popup_type_add');
 
 export const imagePopupSelector = document.querySelector('.popup_type_image');
+
+export const nameInputElement = profilePopupSelector.querySelector('.popup__input_type_name');
+
+export const infoInputElement = profilePopupSelector.querySelector('.popup__input_type_job');
