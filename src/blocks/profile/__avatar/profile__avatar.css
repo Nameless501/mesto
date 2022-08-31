@@ -6,6 +6,9 @@
     border-radius: 50%;
     background-color: white;
     grid-area: img;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
 }
 
 @media screen and (max-width: 767px) {

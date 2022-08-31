@@ -14,27 +14,30 @@
     <main class="content">
 <!--Блок profile-->
       <section class="profile content__profile">
-        <img src="<%=require('./images/avatar.jpg')%>" alt="Аватар" class="profile__avatar">
+        <img src="#" alt="Аватар" class="profile__avatar">
+        <a src="#" class="profile__avatar-cover"></a>
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" class="profile__edit-button"></button>
-          <p class="profile__job">Исследователь океана</p>
+          <p class="profile__job"></p>
         </div>
         <button type="button" class="profile__add-button"></button>
       </section>
 <!--Блок elements-->
       <section class="elements content__elements">
+        <template class="elements__card-template">
+          <li class="elements__card">
+          <figure class="elements__figure">
+            <img src="#" alt="#" class="elements__image">
+            <figcaption class="elements__caption"></figcaption>
+          </figure>
+          <button type="button" class="elements__like-button">
+            <p class="elements__like-counter">0</p>
+          </button>
+          <button type="button" class="elements__delete-button" disabled></button>
+        </li>
+        </template>
         <ul class="elements__gallery">
-          <template class="elements__card-template">
-            <li class="elements__card">
-            <figure class="elements__figure">
-              <img src="#" alt="#" class="elements__image">
-              <figcaption class="elements__caption"></figcaption>
-            </figure>
-            <button type="button" class="elements__like-button"></button>
-            <button type="button" class="elements__delete-button"></button>
-          </li>
-          </template>
         </ul>
       </section>
 <!--Блок pop-up profile-->
@@ -78,6 +81,32 @@
           </figure>
           <button type=button class="popup__close-button"></button>
         </div>
+      </section>
+<!--Блок pop-up avatar-->
+      <section class="popup popup_type_avatar">
+        <form name="avatar" class="popup__form" novalidate>
+          <fieldset class="popup__fieldset">
+            <legend class="popup__title">
+              Обновить аватар
+            </legend>
+            <input type="url" name="link" placeholder="Ссылка на картинку" id="link-input" class="popup__input popup__input_type_link" required>
+            <span class="popup__error-message link-input-error"></span>
+            <button type=submit class="popup__submit-button">Сохранить</button>
+          </fieldset>
+          <button type=reset class="popup__close-button"></button>
+        </form>
+      </section>
+<!--Блок pop-up delete-->
+      <section class="popup popup_type_delete">
+        <form name="delete" class="popup__form" novalidate>
+          <fieldset class="popup__fieldset">
+            <legend class="popup__title">
+              Вы уверены?
+            </legend>
+            <button type=submit class="popup__submit-button popup__submit-button_place_delete-popup">Да</button>
+          </fieldset>
+          <button type=reset class="popup__close-button"></button>
+        </form>
       </section>
     </main>
 <!--Блок footer-->
