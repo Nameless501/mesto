@@ -2,7 +2,7 @@
 
 import './index.css';
 
-import { validationConfig, userInfoSelectors, profileButton, newCardButton, avatarButton, profilePopupSelector, newCardPopupSelector, imagePopupSelector, avatarPopupSelector, deletePopupSelector, nameInputElement, infoInputElement, myCohort, myToken, baseUrl} from '../utils/constants.js';
+import { validationConfig, userInfoSelectors, profileButton, newCardButton, avatarButton, profilePopupSelector, newCardPopupSelector, imagePopupSelector, avatarPopupSelector, deletePopupSelector, galleryClassSelector, myCohort, myToken, baseUrl} from '../utils/constants.js';
 
 import { FormValidator } from '../components/FormValidator.js';
 
@@ -24,81 +24,75 @@ import { Api } from '../components/Api.js';
 
 const api = new Api(baseUrl, myCohort, myToken);
 
-const getAllData = async () => {
-    const allData = await Promise.all([api.getCardsData(), api.getUserData()]);
-    return allData;
-}
-
 const popupWithImage = new PopupWithImage(imagePopupSelector);
 
 const defaultCards = new Section(
     (cardData, userData) => {
         defaultCards.addItem(renderCard(cardData, userData, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup));
     },
-    '.elements__gallery');
-
-defaultCards.renderItems(getAllData);
+    galleryClassSelector);
 
 const userInfo = new UserInfo(userInfoSelectors);
 
-const setDefaultInfo = async () => {
-    const getData = await api.getUserData();
-    const setData = await userInfo.setUserInfo(getData);
+function getAllData() {
+    Promise.all([api.getCardsData(), api.getUserData()])
+        .then(allData => {
+            const [cardsData, userData] = allData;
+            return [cardsData, userData]
+        })
+        .then(([cardsData, userData]) => {
+            defaultCards.renderItems(cardsData, userData);
+            userInfo.setUserInfo(userData)
+        })
+        .catch(err => console.log(`Не удалость загрузить данные. Ошибка: ${err}`));
 }
 
-setDefaultInfo();
+getAllData();
 
 const profilePopup = new PopupWithForm(
     profilePopupSelector,
-    async (data) => {
-        try {
-            const fetchData = await api.setUserData(data);
-            const response = await userInfo.setUserInfo(fetchData);
-        } catch (err) {
-            console.log(`Не удалось отправить данные. Ошибка: ${err}`);
-        } finally {
-            profilePopup.closePopup();
-        }
-});
+    (data) => {
+        return api.setUserData(data)
+            .then(data => userInfo.setUserInfo(data))
+    }
+);
 
 const newCardPopup = new PopupWithForm(
     newCardPopupSelector,
-    async (data) => {
-        try {
-            const postCard = await api.postCard(data);
-            const refreshCards = await defaultCards.refreshCards(getAllData);
-        } catch(err) {
-            console.log(`Не удалось отправить данные. Ошибка: ${err}`);
-        } finally {
-            newCardPopup.closePopup();
-        }
-});
+    (data) => {
+        return Promise.all([api.postCard(data), api.getUserData()])
+            .then(allData => {
+                const [newCardData, userData] = allData;
+                return [newCardData, userData];
+            })
+            .then(([newCardData, userData]) => {
+                defaultCards.addItem(
+                    renderCard(newCardData, userData, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup),
+                    false);
+            })
+    }
+);
 
 const avatarPopup = new PopupWithForm(
     avatarPopupSelector,
-    async (data) => {
-        try {
-            const fetchData = await api.setAvatar(data);
-            const response = await userInfo.setUserInfo(fetchData);
-        } catch (err) {
-            console.log(`Не удалось отправить данные. Ошибка: ${err}`);
-        } finally {
-            avatarPopup.closePopup();
-        }
-}); 
+    (data) => {
+        return api.setAvatar(data)
+            .then(data => userInfo.setUserInfo(data))
+    }
+);
 
 const deletePopup = new PopupWithSubmit(
     deletePopupSelector,
-    async (cardId) => {
-        try {
-            const deleteCard = await api.deleteCard(cardId);
-            const refreshCards = await defaultCards.refreshCards(getAllData);
-        } catch (err) {
-            console.log(`Не удалось удалить карточку. Ошибка: ${err}`);
-        } finally {
-            deletePopup.closePopup();
-        }
-}); 
+    (cardId) => {
+        return api.deleteCard(cardId)
+            .then(() => Promise.all([api.getCardsData(), api.getUserData()]))
+            .then(allData => {
+                const [cardsData, userData] = allData;
+                return [cardsData, userData]
+            })
+            .then(([cardsData, userData]) => defaultCards.refreshCards(cardsData, userData))    
+    }
+); 
 
 profilePopup.setEventListeners();
 
@@ -124,12 +118,7 @@ avatarValidator.enableValidation();
 
 profileButton.addEventListener('click', () => {
     profileValidator.clearValidation();
-
-    const currentUserData = userInfo.getUserInfo();
-
-    nameInputElement.value = currentUserData.name;
-    infoInputElement.value = currentUserData.info;
-
+    profilePopup.setInputValue(userInfo.getUserInfo());
     profilePopup.openPopup();
 });
 

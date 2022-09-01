@@ -45,12 +45,8 @@ export class Card {
 
     _setEventListeners() {
         this._likeButton.addEventListener('click', () => {
-            try {
-                this._isLiked ? this._handleDislike() : this._handleLike();
-            } catch(err) {
-                console.log(`Не удалось отправить данные. Ошибка: ${err}`);
-            };
-        })
+            this._isLiked ? this._handleDislike() : this._handleLike();
+        });
 
         this._cardImage.addEventListener('click', () => {
             this._handleCardClick(this._data);
@@ -75,18 +71,16 @@ export class Card {
 
     _handleLike() {
         this._handleLikeButton(this._cardId, 'PUT')
-            .then(data => {
-                this._likeCounter(data.likes);
-            });
-        this._enableLike();
+            .then(data => this._likeCounter(data.likes))
+            .then(() => this._enableLike())
+            .catch(err => console.log(`Не удалось отправить данные. Ошибка: ${err}`));
     }
 
     _handleDislike() {
         this._handleLikeButton(this._cardId, 'DELETE')
-            .then(data => {
-                this._likeCounter(data.likes);
-            });
-        this._disableLike();
+            .then(data => this._likeCounter(data.likes))
+            .then(() => this._disableLike())
+            .catch(err => console.log(`Не удалось отправить данные. Ошибка: ${err}`));
     }
 
     _checkCardOwner() {

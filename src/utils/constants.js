@@ -15,7 +15,7 @@ export const userInfoSelectors = {
   avatar: '.profile__avatar'
 }
 
-// Константы
+// Переменные
 
 export const profileButton = document.querySelector('.profile__edit-button');
 
@@ -33,9 +33,7 @@ export const avatarPopupSelector = document.querySelector('.popup_type_avatar');
 
 export const deletePopupSelector = document.querySelector('.popup_type_delete');
 
-export const nameInputElement = profilePopupSelector.querySelector('.popup__input_type_name');
-
-export const infoInputElement = profilePopupSelector.querySelector('.popup__input_type_job');
+export const galleryClassSelector = '.elements__gallery';
 
 export const myCohort = 'cohort-49';
 

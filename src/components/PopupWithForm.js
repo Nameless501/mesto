@@ -6,8 +6,10 @@ export class PopupWithForm extends Popup {
         this._handleSubmit = handleSubmit;
     }
 
-    _getInputValues(evt) {
-        this._formData = Object.fromEntries(new FormData(evt.target));;
+    _getInputValues() {
+        this._formData = {};
+
+        this._inputList.forEach(input => this._formData[input.name] = input.value);
 
         return this._formData;
     }
@@ -15,26 +17,30 @@ export class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners();
         this._submitButton = this._popup.querySelector('.popup__submit-button');
-        this._initialButtonText = this._submitButton.textContent;
 
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._renderLoading(true);
-            this._handleSubmit(this._getInputValues(evt));
+            
+            const initialButtonText = this._submitButton.textContent;
+            this._submitButton.textContent = 'Сохранение...';
+
+            this._handleSubmit(this._getInputValues())
+                .then(() => this.closePopup())
+                .catch(err => console.log(`Не удалось отправить данные. Ошибка: ${err}`))
+                .finally(() => {
+                    this._submitButton.textContent = initialButtonText;
+                });
         });
     }
 
     closePopup() {
         super.closePopup();
-        this._popup.querySelector('.popup__form').reset();
-        this._renderLoading(false);
+        this._form.reset();
     }
 
-    _renderLoading = (isLoading) => {
-        if(isLoading) {
-            this._submitButton.textContent = 'Сохранение...';
-        } else {
-            this._submitButton.textContent = this._initialButtonText;
-        }
+    setInputValue = (data) => {
+        this._inputList.forEach(input => {
+            input.value = data[input.name];
+        })
     }
 }

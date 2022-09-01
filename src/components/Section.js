@@ -4,19 +4,18 @@ export class Section {
         this._container = document.querySelector(containerSelector);
     }
 
-    renderItems = async (getData) => {
-        const allData = await getData();
-        const res = await allData[0].forEach(currentCard => {
-            this._renderer(currentCard, allData[1]);
+    renderItems = (cardsData, userData) => {
+        cardsData.forEach(currentCard => {
+            this._renderer(currentCard, userData);
         });
     }
 
-    addItem = (element) => {
-        this._container.append(element);
+    addItem = (element, toStart = true) => {
+        toStart ? this._container.append(element) : this._container.prepend(element);
     }
 
-    refreshCards = async (getData) => {
+    refreshCards = (cardsData, userData) => {
         this._container.innerHTML = '';
-        const render = await this.renderItems(getData);
+        this.renderItems(cardsData, userData);
     }
 }

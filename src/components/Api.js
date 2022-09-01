@@ -5,36 +5,38 @@ export class Api {
         this._token = token;
     }
 
-    getCardsData = async () => {
-        try {
-            const getData = await fetch(`${this._baseUrl}/${this._cohort}/cards`, {
-                headers: {
-                  authorization: this._token
+    getCardsData = () => {
+        return fetch(`${this._baseUrl}/${this._cohort}/cards`, {
+            headers: {
+              authorization: this._token
+            }
+        })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
                 }
-            });
-            const result = await getData.json();
-            return result;
-        } catch(err) {
-            console.log(`Не удалось загрузить данные карточек. Ошибка: ${err}`);
-        }
+                return Promise.reject(`Ошибка ${res.status}`);
+            })
+            .catch(err => console.log(`Не удалось загрузить данные карточек. Ошибка: ${err}`));
     }
 
-    getUserData = async () => {
-        try {
-            const getData = await fetch(`${this._baseUrl}/${this._cohort}/users/me`, {
-                headers: {
-                  authorization: this._token
+    getUserData = () => {
+        return fetch(`${this._baseUrl}/${this._cohort}/users/me`, {
+            headers: {
+              authorization: this._token
+            }
+        })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
                 }
-            });
-            const result = await getData.json();
-            return result;
-        } catch(err) {
-            console.log(`Не удалось загрузить данные польователя. Ошибка: ${err}`);
-        }
+                return Promise.reject(`Ошибка ${res.status}`);
+            })
+            .catch(err => console.log(`Не удалось загрузить данные польователя. Ошибка: ${err}`));
     }
 
-    setUserData = async (data) => {
-        const patchData = await fetch(`${this._baseUrl}/${this._cohort}/users/me`, {
+    setUserData = (data) => {
+        return fetch(`${this._baseUrl}/${this._cohort}/users/me`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
@@ -44,28 +46,36 @@ export class Api {
                 name: data.name,
                 about: data.info
             })
-        });
-        const response = await patchData.json();
-        return response;
+        })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            });
     }
 
-    setAvatar = async (data) => {
-        const patchData = await fetch(`${this._baseUrl}/${this._cohort}/users/me/avatar`, {
+    setAvatar = (data) => {
+        return fetch(`${this._baseUrl}/${this._cohort}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                avatar: data.link,
+                avatar: data.avatar,
             })
-        });
-        const response = await patchData.json();
-        return response;
+        })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            });
     }
 
-    postCard = async (data) => {
-        const post = await fetch(`${this._baseUrl}/${this._cohort}/cards`, {
+    postCard = (data) => {
+        return fetch(`${this._baseUrl}/${this._cohort}/cards`, {
             method: 'POST',
             headers: {
                 authorization: this._token,
@@ -76,25 +86,40 @@ export class Api {
                 link: data.link
             })
         })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            });
     }
 
-    deleteCard = async (cardId) => {
-        const deleteCard = await fetch(`${this._baseUrl}/${this._cohort}/cards/${cardId} `, {
+    deleteCard = (cardId) => {
+        return fetch(`${this._baseUrl}/${this._cohort}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
                 authorization: this._token,
             }
-        });
+        })
+            .then(res => {
+                if(!res.ok) {
+                    return Promise.reject(`Ошибка ${res.status}`);
+                }
+            });
     }
 
-    handleLike = async (cardId, method) => {
-        const data = await fetch(`${this._baseUrl}/${this._cohort}/cards/${cardId}/likes`, {
+    handleLike = (cardId, method) => {
+        return fetch(`${this._baseUrl}/${this._cohort}/cards/${cardId}/likes`, {
             method: method,
             headers: {
                 authorization: this._token,
             },
-        });
-        const response = await data.json();
-        return response;
+        })
+            .then(res => {
+               if(res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            });
     }
 }

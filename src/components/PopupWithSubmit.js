@@ -15,12 +15,10 @@ export class PopupWithSubmit extends Popup {
         super.setEventListeners();
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._handleSubmit(this._cardId);
-        });
-    }
 
-    closePopup() {
-        super.closePopup();
-        this._popup.querySelector('.popup__form').reset();
+            this._handleSubmit(this._cardId)
+                .then(() => this.closePopup())
+                .catch(err => console.log(`Не удалось удалить карточку. Ошибка: ${err}`));
+        });
     }
 }
