@@ -1,5 +1,5 @@
 export class Card {
-    constructor(cardData, userData, templateSelector, handleCardClick, handleLikeButton, handleDeleteButton) {
+    constructor(cardData, userId, templateSelector, handleCardClick, handleLikeButton, handleDeleteButton) {
         this._data = cardData
         this._name = cardData.name;
         this._link = cardData.link;
@@ -9,7 +9,7 @@ export class Card {
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
         this._handleLikeButton  = handleLikeButton;
-        this._myId = userData._id;
+        this._myId = userId;
         this._handleDeleteButton = handleDeleteButton;
     }
 

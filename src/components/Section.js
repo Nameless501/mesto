@@ -4,9 +4,9 @@ export class Section {
         this._container = document.querySelector(containerSelector);
     }
 
-    renderItems = (cardsData, userData) => {
+    renderItems = (cardsData, userId) => {
         cardsData.forEach(currentCard => {
-            this._renderer(currentCard, userData);
+            this._renderer(currentCard, userId);
         });
     }
 
@@ -14,8 +14,8 @@ export class Section {
         toStart ? this._container.append(element) : this._container.prepend(element);
     }
 
-    refreshCards = (cardsData, userData) => {
+    refreshCards = (cardsData, userId) => {
         this._container.innerHTML = '';
-        this.renderItems(cardsData, userData);
+        this.renderItems(cardsData, userId);
     }
 }

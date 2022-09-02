@@ -20,6 +20,10 @@ import { renderCard } from '../utils/utils.js';
 
 import { Api } from '../components/Api.js';
 
+// Переменная с ID пользователя
+
+let myId = '';
+
 // Создание экземпларов класса
 
 const api = new Api(baseUrl, myCohort, myToken);
@@ -27,8 +31,8 @@ const api = new Api(baseUrl, myCohort, myToken);
 const popupWithImage = new PopupWithImage(imagePopupSelector);
 
 const defaultCards = new Section(
-    (cardData, userData) => {
-        defaultCards.addItem(renderCard(cardData, userData, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup));
+    (cardData, userId) => {
+        defaultCards.addItem(renderCard(cardData, userId, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup));
     },
     galleryClassSelector);
 
@@ -41,8 +45,10 @@ function getAllData() {
             return [cardsData, userData]
         })
         .then(([cardsData, userData]) => {
-            defaultCards.renderItems(cardsData, userData);
-            userInfo.setUserInfo(userData)
+            myId = userData._id;
+
+            defaultCards.renderItems(cardsData, myId);
+            userInfo.setUserInfo(userData);
         })
         .catch(err => console.log(`Не удалость загрузить данные. Ошибка: ${err}`));
 }
@@ -60,16 +66,12 @@ const profilePopup = new PopupWithForm(
 const newCardPopup = new PopupWithForm(
     newCardPopupSelector,
     (data) => {
-        return Promise.all([api.postCard(data), api.getUserData()])
-            .then(allData => {
-                const [newCardData, userData] = allData;
-                return [newCardData, userData];
-            })
-            .then(([newCardData, userData]) => {
+        return api.postCard(data)
+            .then(newCardData => {
                 defaultCards.addItem(
-                    renderCard(newCardData, userData, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup),
+                    renderCard(newCardData, myId, popupWithImage.openPopup, api.handleLike, deletePopup.openPopup),
                     false);
-            })
+            });
     }
 );
 
@@ -85,12 +87,8 @@ const deletePopup = new PopupWithSubmit(
     deletePopupSelector,
     (cardId) => {
         return api.deleteCard(cardId)
-            .then(() => Promise.all([api.getCardsData(), api.getUserData()]))
-            .then(allData => {
-                const [cardsData, userData] = allData;
-                return [cardsData, userData]
-            })
-            .then(([cardsData, userData]) => defaultCards.refreshCards(cardsData, userData))    
+            .then(() => api.getCardsData())
+            .then(cardsData => defaultCards.refreshCards(cardsData, myId)); 
     }
 ); 
 
